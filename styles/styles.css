@@ -362,7 +362,7 @@ h1 {
 
 /* Top corner images */
 .corner-images {
-    position: fixed; /* Changed to fixed to stick to viewport corners */
+    position: fixed;
     top: 20px;
     width: 100%;
     pointer-events: none;
@@ -381,4 +381,26 @@ h1 {
     width: 100%;
     height: 100%;
     object-fit: contain;
+    max-width: 100%;
+}
+
+/* Mobile responsiveness */
+@media screen and (max-width: 768px) {
+    .corner-image {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .corner-images {
+        top: 10px;
+        padding: 0 10px;
+    }
+}
+
+/* Even smaller screens */
+@media screen and (max-width: 480px) {
+    .corner-image {
+        width: 60px;
+        height: 60px;
+    }
 }
