@@ -360,16 +360,19 @@ h1 {
 }
 
 
-/* Top corner images */
+
+/* Corner Images (two of them) */
 .corner-images {
     position: fixed;
     top: 20px;
-    width: 100%;
+    width: 80%; /* Reduced from 100% to bring images closer */
     pointer-events: none;
     z-index: 1000;
     display: flex;
     justify-content: space-between;
     padding: 0 20px;
+    left: 50%; /* Added to center the container */
+    transform: translateX(-50%); /* Added to center the container */
 }
 
 .corner-image {
@@ -386,19 +389,24 @@ h1 {
 
 /* Mobile responsiveness */
 @media screen and (max-width: 768px) {
+    .corner-images {
+        width: 90%; /* Slightly wider on mobile for better spacing */
+        top: 10px;
+        padding: 0 10px;
+    }
+    
     .corner-image {
         width: 80px;
         height: 80px;
-    }
-    
-    .corner-images {
-        top: 10px;
-        padding: 0 10px;
     }
 }
 
 /* Even smaller screens */
 @media screen and (max-width: 480px) {
+    .corner-images {
+        width: 95%; /* Even wider on very small screens */
+    }
+    
     .corner-image {
         width: 60px;
         height: 60px;
