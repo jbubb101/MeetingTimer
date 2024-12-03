@@ -259,7 +259,7 @@ h1 {
 }
 
 .nevada-flag {
-    background: url('/Flag_of_Nevada.svg.png') no-repeat center center;
+    background: url('../images/Flag_of_Nevada.svg.png') no-repeat center center;
     background-size: cover;
     position: relative;
 }
