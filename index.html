@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JEmmma Reunite in...</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="lights">
+            <div class="light" style="background: #ff0000; animation-delay: 0.1s;"></div>
+            <div class="light" style="background: #00ff00; animation-delay: 0.2s;"></div>
+            <div class="light" style="background: #0000ff; animation-delay: 0.3s;"></div>
+            <div class="light" style="background: #ffff00; animation-delay: 0.4s;"></div>
+            <div class="light" style="background: #ff00ff; animation-delay: 0.5s;"></div>
+        </div>
+        <div class="candycane left-cane"></div>
+        <div class="candycane right-cane"></div>
+        <h1>JEmma Reunite in...</h1>
+        <div class="countdown" id="countdown"></div>
+        
+        <div class="flags">
+            <div class="flag nevada-flag">
+                <!-- Placeholder for Nevada flag image -->
+            </div>
+            <div class="flag texas-flag"></div>
+        </div>
+
+        <div class="flight-map">
+            <div class="city-marker" style="left: 20%; top: 40%;"></div>
+            <div class="city-label" style="left: 18%; top: 30%;">RNO</div>
+            <div class="city-marker" style="left: 80%; top: 60%;"></div>
+            <div class="city-label" style="left: 78%; top: 70%;">AUS</div>
+            <div class="flight-path" style="left: 20%; top: 40%; width: 60%; transform: rotate(15deg);"></div>
+            <div class="plane">✈️</div>
+            <div class="destination-heart">❤️</div>
+        </div>
+
+        <div class="snowman">
+            <div class="snowman-head">
+                <div class="snowman-eye left"></div>
+                <div class="snowman-eye right"></div>
+                <div class="snowman-nose"></div>
+                <div class="snowman-scarf"></div>
+            </div>
+            <div class="snowman-body">
+                <div class="snowman-arm left"></div>
+                <div class="snowman-arm right"></div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="time-remaining" id="time-remaining"></div>
+    </div>
+
+    <script>
+        // Create snow
+        function createSnow() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snow');
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.width = snowflake.style.height = Math.random() * 5 + 5 + 'px';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnow, 100);
+
+        // Countdown timer
+        function updateCountdown() {
+            const startDate = moment('2024-12-02T00:00:00');
+            const targetDate = moment('2024-12-05T18:30:00');
+            const now = moment();
+            const diff = targetDate.diff(now);
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "Together at last! 🎄❤️";
+                document.getElementById('progress-bar').style.width = '100%';
+                document.getElementById('time-remaining').innerHTML = "The wait is over!";
+                return;
+            }
+            
+            const duration = moment.duration(diff);
+            const days = Math.floor(duration.asDays());
+            const hours = duration.hours();
+            const minutes = duration.minutes();
+            const seconds = duration.seconds();
+
+            document.getElementById('countdown').innerHTML = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            const totalDuration = targetDate.diff(startDate);
+            const elapsed = now.diff(startDate);
+            const progress = (elapsed / totalDuration) * 100;
+            document.getElementById('progress-bar').style.width = `${Math.min(progress, 100)}%`;
+
+            const timeRemaining = targetDate.from(now);
+            document.getElementById('time-remaining').innerHTML = `Meeting ${timeRemaining}`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>

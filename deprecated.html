@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown to Meeting</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <style>
+        /* Previous styles remain the same until container */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(to bottom, #1a4a7c, #2d2d4d);
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .snow {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+            animation: snowfall linear infinite;
+        }
+
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-100vh) translateX(0);
+            }
+            100% {
+                transform: translateY(100vh) translateX(20px);
+            }
+        }
+
+        .container {
+            text-align: center;
+            padding: 2em;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
+            min-width: 500px;
+        }
+
+        .lights {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+        }
+
+        .light {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            animation: twinkle 1s infinite alternate;
+        }
+
+        @keyframes twinkle {
+            0% { opacity: 0.4; }
+            100% { opacity: 1; }
+        }
+
+        .countdown {
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            margin: 20px 0;
+        }
+
+        .candycane {
+            position: absolute;
+            width: 30px;
+            height: 120px;
+            background: linear-gradient(45deg, 
+                #ff0000 25%, 
+                #ffffff 25%, 
+                #ffffff 50%, 
+                #ff0000 50%, 
+                #ff0000 75%, 
+                #ffffff 75%);
+            background-size: 30px 30px;
+            border-radius: 10px;
+        }
+
+        .left-cane {
+            left: -40px;
+            top: 50%;
+            transform: translateY(-50%) rotate(-30deg);
+        }
+
+        .right-cane {
+            right: -40px;
+            top: 50%;
+            transform: translateY(-50%) rotate(30deg);
+        }
+
+        h1 {
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            margin: 20px 0;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(45deg, 
+                #ff0000 0%, 
+                #ff0000 25%, 
+                #ffffff 25%, 
+                #ffffff 50%, 
+                #ff0000 50%, 
+                #ff0000 75%, 
+                #ffffff 75%);
+            background-size: 30px 30px;
+            animation: candycane-move 3s linear infinite;
+            transition: width 1s linear;
+            border-radius: 15px;
+        }
+
+        @keyframes candycane-move {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: 30px 0;
+            }
+        }
+
+        .time-remaining {
+            color: #fff;
+            margin-top: 10px;
+            font-size: 1.2em;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+        }
+
+        /* New flight map styles */
+        .flight-map {
+            width: 100%;
+            height: 150px;
+            margin: 20px 0;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .city-marker {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .city-label {
+            position: absolute;
+            color: #fff;
+            font-size: 0.9em;
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+        }
+
+        .flight-path {
+            position: absolute;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: left center;
+        }
+
+        .plane {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            color: white;
+            animation: fly 3s linear infinite;
+            transform-origin: center;
+        }
+
+        @keyframes fly {
+            0% {
+                left: 20%;
+                top: 40%;
+            }
+            50% {
+                left: 50%;
+                top: 30%;
+            }
+            100% {
+                left: 80%;
+                top: 60%;
+            }
+        }
+
+        .destination-heart {
+            position: absolute;
+            right: 18%;
+            top: 58%;
+            color: red;
+            font-size: 1.5em;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="lights">
+            <div class="light" style="background: #ff0000; animation-delay: 0.1s;"></div>
+            <div class="light" style="background: #00ff00; animation-delay: 0.2s;"></div>
+            <div class="light" style="background: #0000ff; animation-delay: 0.3s;"></div>
+            <div class="light" style="background: #ffff00; animation-delay: 0.4s;"></div>
+            <div class="light" style="background: #ff00ff; animation-delay: 0.5s;"></div>
+        </div>
+        <div class="candycane left-cane"></div>
+        <div class="candycane right-cane"></div>
+        <h1>Countdown to Meeting!</h1>
+        <div class="countdown" id="countdown"></div>
+        <div class="flight-map">
+            <div class="city-marker" style="left: 20%; top: 40%;"></div>
+            <div class="city-label" style="left: 18%; top: 30%;">RNO</div>
+            <div class="city-marker" style="left: 80%; top: 60%;"></div>
+            <div class="city-label" style="left: 78%; top: 70%;">AUS</div>
+            <div class="flight-path" style="left: 20%; top: 40%; width: 60%; transform: rotate(15deg);"></div>
+            <div class="plane">✈️</div>
+            <div class="destination-heart">❤️</div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress-bar"></div>
+        </div>
+        <div class="time-remaining" id="time-remaining"></div>
+    </div>
+
+    <script>
+        // Previous snow creation code remains the same
+        function createSnow() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snow');
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = Math.random() * 3 + 2 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.width = snowflake.style.height = Math.random() * 5 + 5 + 'px';
+            document.body.appendChild(snowflake);
+
+            setTimeout(() => {
+                snowflake.remove();
+            }, 5000);
+        }
+
+        setInterval(createSnow, 100);
+
+        // Countdown timer
+        function updateCountdown() {
+            const startDate = moment('2024-12-02T00:00:00');
+            const targetDate = moment('2024-12-05T18:30:00');
+            const now = moment();
+            const diff = targetDate.diff(now);
+            
+            if (diff <= 0) {
+                document.getElementById('countdown').innerHTML = "Together at last! 🎄❤️";
+                document.getElementById('progress-bar').style.width = '100%';
+                document.getElementById('time-remaining').innerHTML = "The wait is over!";
+                return;
+            }
+            
+            const duration = moment.duration(diff);
+            const days = Math.floor(duration.asDays());
+            const hours = duration.hours();
+            const minutes = duration.minutes();
+            const seconds = duration.seconds();
+
+            document.getElementById('countdown').innerHTML = 
+                `${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+            const totalDuration = targetDate.diff(startDate);
+            const elapsed = now.diff(startDate);
+            const progress = (elapsed / totalDuration) * 100;
+            document.getElementById('progress-bar').style.width = `${Math.min(progress, 100)}%`;
+
+            const timeRemaining = targetDate.from(now);
+            document.getElementById('time-remaining').innerHTML = `Meeting ${timeRemaining}`;
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
