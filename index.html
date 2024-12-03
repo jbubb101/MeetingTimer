@@ -6,6 +6,18 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 </head>
 <body>
+
+        <!-- Corner Images -->
+        <div class="corner-images">
+            <div class="corner-image">
+                <img src="images/tiger_no_background.png" alt="Left Corner Image">
+            </div>
+            <div class="corner-image">
+                <img src="images/survivorLogo.webp" alt="Right Corner Image">
+            </div>
+        </div>
+
+
     <div class="container">
         <div class="lights">
             <div class="light" style="background: #ff0000; animation-delay: 0.1s;"></div>
@@ -31,7 +43,6 @@
             <div class="city-label" style="left: 18%; top: 30%;">RNO</div>
             <div class="city-marker" style="left: 80%; top: 60%;"></div>
             <div class="city-label" style="left: 78%; top: 70%;">AUS</div>
-            <div class="flight-path" style="left: 20%; top: 40%; width: 60%; transform: rotate(15deg);"></div>
             <div class="plane">✈️</div>
             <div class="destination-heart">❤️</div>
         </div>
@@ -48,6 +59,8 @@
                 <div class="snowman-arm right"></div>
             </div>
         </div>
+
+        
 
         <div class="progress-container">
             <div class="progress-bar" id="progress-bar"></div>
@@ -102,7 +115,7 @@
             document.getElementById('progress-bar').style.width = `${Math.min(progress, 100)}%`;
 
             const timeRemaining = targetDate.from(now);
-            document.getElementById('time-remaining').innerHTML = `Meeting ${timeRemaining}`;
+            document.getElementById('time-remaining').innerHTML = `😊 Meeting ${timeRemaining} 😊`;
         }
 
         setInterval(updateCountdown, 1000);
